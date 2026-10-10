@@ -1,0 +1,31 @@
+# Example policy for a fictional parts supplier. Synthetic, for the demo only.
+#
+# Each action declares its tier and the purposes it may be used for.
+# Each agent declares its ceiling tier, its purposes and its per-run budgets.
+
+[actions.lookup_order]
+tier = "read"
+purposes = ["customer_support", "reporting"]
+
+[actions.update_delivery_address]
+tier = "act"
+purposes = ["customer_support"]
+
+[actions.send_customer_email]
+tier = "act"
+purposes = ["customer_support"]
+
+[actions.issue_refund]
+tier = "spend"
+purposes = ["customer_support"]
+max_amount = 200.0   # no single refund above this, approved or not
+
+[agents.support-agent]
+max_tier = "spend"
+purposes = ["customer_support"]
+act_budget = 3        # at most 3 act-tier calls in one run
+spend_budget = 250.0  # at most 250 refunded in one run
+
+[agents.reporting-agent]
+max_tier = "read"
+purposes = ["reporting"]
